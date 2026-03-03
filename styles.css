@@ -2,6 +2,10 @@
    8th Wall — Single Page Layout
    No scroll, full viewport
    ============================ */
+html {
+    font-size: 20px;
+}
+
 :root {
     --purple: #7611B6;
     --purple-light: #9333ea;
@@ -45,8 +49,8 @@ body {
 
 /* ==== Header ==== */
 .header {
-    height: 48px;
-    padding: 0 20px;
+    height: 58px;
+    padding: 0 28px;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -62,12 +66,12 @@ body {
 }
 
 .header-title {
-    font-size: 0.88rem;
+    font-size: 1rem;
     font-weight: 600;
 }
 
 .header-link {
-    font-size: 0.78rem;
+    font-size: 0.9rem;
     color: var(--text-dim);
     text-decoration: none;
     font-weight: 500;
@@ -92,7 +96,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 16px;
+    padding: 20px;
     min-width: 0;
     position: relative;
     background: var(--bg);
@@ -128,14 +132,14 @@ body {
 }
 
 .upload-icon {
-    font-size: 32px;
+    font-size: 48px;
     display: block;
-    margin-bottom: 8px;
+    margin-bottom: 12px;
     opacity: 0.6;
 }
 
 .upload-text {
-    font-size: 0.88rem;
+    font-size: 1.05rem;
     color: var(--text-dim);
 }
 
@@ -144,9 +148,9 @@ body {
 }
 
 .upload-hint {
-    font-size: 0.72rem;
+    font-size: 0.85rem;
     color: var(--text-muted);
-    margin-top: 4px;
+    margin-top: 6px;
 }
 
 #imageFileInput {
@@ -279,14 +283,14 @@ body {
 
 /* ==== Right Panel: Settings ==== */
 .panel-settings {
-    width: 280px;
+    width: 380px;
     flex-shrink: 0;
     background: var(--bg-white);
     border-left: 1px solid var(--border);
-    padding: 16px;
+    padding: 20px;
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 14px;
     overflow-y: auto;
 }
 
@@ -297,7 +301,7 @@ body {
 }
 
 .setting-label {
-    font-size: 0.75rem;
+    font-size: 0.8rem;
     font-weight: 600;
     color: var(--text-dim);
     text-transform: uppercase;
@@ -315,11 +319,11 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 8px 4px;
+    padding: 11px 6px;
     border: 1.5px solid var(--border);
     border-radius: var(--radius);
     cursor: pointer;
-    font-size: 0.78rem;
+    font-size: 0.9rem;
     font-weight: 500;
     color: var(--text-dim);
     transition: all 0.15s;
@@ -376,11 +380,11 @@ body {
 
 .input {
     width: 100%;
-    padding: 7px 10px;
+    padding: 10px 12px;
     border: 1px solid var(--border);
     border-radius: var(--radius);
     font-family: var(--font);
-    font-size: 0.82rem;
+    font-size: 0.95rem;
     color: var(--text);
     background: var(--bg);
     outline: none;
@@ -475,11 +479,11 @@ body {
 /* Generate button */
 .btn-generate {
     width: 100%;
-    padding: 10px;
+    padding: 13px;
     background: var(--purple);
     color: white;
     font-family: var(--font);
-    font-size: 0.85rem;
+    font-size: 0.98rem;
     font-weight: 600;
     border: none;
     border-radius: var(--radius);
