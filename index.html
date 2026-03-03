@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>8th Wall — Image Target Generator</title>
+    <meta name="description"
+        content="Generate 8th Wall AR image target metadata from your images. Supports flat and cylindrical targets.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-brand">
+            <svg width="24" height="24" viewBox="0 0 64 64" fill="none">
+                <rect width="64" height="64" rx="14" fill="#7611B6" />
+                <path
+                    d="M32 14C23.2 14 16 21.2 16 30c0 5.8 3.1 10.8 7.7 13.6L32 50l8.3-6.4C44.9 40.8 48 35.8 48 30c0-8.8-7.2-16-16-16zm0 24a8 8 0 110-16 8 8 0 010 16z"
+                    fill="white" />
+                <circle cx="32" cy="30" r="4" fill="white" opacity="0.7" />
+            </svg>
+            <span class="header-title">8th Wall Image Target Generator</span>
+        </div>
+        <a href="https://www.8thwall.com/docs" target="_blank" class="header-link">Docs ↗</a>
+    </header>
+
+    <!-- Main Layout: Image Left, Settings Right -->
+    <main class="main">
+        <!-- Left: Image Area -->
+        <div class="panel-image">
+            <!-- Upload state -->
+            <div class="upload-zone" id="uploadZone">
+                <div class="upload-content">
+                    <span class="upload-icon">📸</span>
+                    <div class="upload-text"><strong>Drop image</strong> or click to browse</div>
+                    <div class="upload-hint">JPG, PNG, WebP</div>
+                </div>
+                <input type="file" id="imageFileInput" accept="image/jpeg,image/png,image/webp">
+            </div>
+            <!-- Preview state -->
+            <div class="preview-area" id="previewArea">
+                <div class="preview-wrapper" id="previewWrapper">
+                    <img id="imagePreview" alt="Preview">
+                    <div class="crop-overlay" id="cropOverlay">
+                        <div class="crop-handle crop-handle-tl" data-handle="tl"></div>
+                        <div class="crop-handle crop-handle-tr" data-handle="tr"></div>
+                        <div class="crop-handle crop-handle-bl" data-handle="bl"></div>
+                        <div class="crop-handle crop-handle-br" data-handle="br"></div>
+                        <div class="crop-size-badge" id="cropSizeBadge"></div>
+                    </div>
+                </div>
+                <div class="image-meta" id="imageMeta"></div>
+            </div>
+        </div>
+
+        <!-- Right: Settings Panel -->
+        <div class="panel-settings">
+            <!-- Geometry -->
+            <div class="setting-group">
+                <label class="setting-label">Target Type</label>
+                <div class="type-selector">
+                    <label class="type-option">
+                        <input type="radio" name="geometryType" value="flat" checked>
+                        <span>📄 Flat</span>
+                    </label>
+                    <label class="type-option">
+                        <input type="radio" name="geometryType" value="cylinder">
+                        <span>🥫 Cylinder</span>
+                    </label>
+                    <label class="type-option disabled">
+                        <input type="radio" name="geometryType" value="cone" disabled>
+                        <span>🔺 Cone</span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Cylinder Fields -->
+            <div class="cylinder-fields" id="cylinderFields">
+                <div class="field-row">
+                    <div class="field">
+                        <label class="setting-label">Unit</label>
+                        <div class="type-selector compact">
+                            <label class="type-option"><input type="radio" name="unit" value="mm"
+                                    checked><span>mm</span></label>
+                            <label class="type-option"><input type="radio" name="unit"
+                                    value="in"><span>in</span></label>
+                        </div>
+                    </div>
+                </div>
+                <div class="field-row">
+                    <div class="field">
+                        <label class="setting-label" for="cylinderCircumference">Circumference</label>
+                        <input type="number" class="input" id="cylinderCircumference" placeholder="220" step="any"
+                            min="0">
+                    </div>
+                    <div class="field">
+                        <label class="setting-label" for="targetWidth">Image Width</label>
+                        <input type="number" class="input" id="targetWidth" placeholder="150" step="any" min="0">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Crop -->
+            <div class="setting-group">
+                <div class="toggle-row">
+                    <label class="setting-label">Default Crop</label>
+                    <label class="toggle">
+                        <input type="checkbox" id="useDefaultCrop" checked>
+                        <span class="toggle-track"></span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="manual-crop hidden" id="manualCropInputs">
+                <div class="toggle-row compact">
+                    <label class="setting-label">Rotate 90°</label>
+                    <label class="toggle">
+                        <input type="checkbox" id="isRotated">
+                        <span class="toggle-track"></span>
+                    </label>
+                </div>
+                <div class="field-row">
+                    <div class="field">
+                        <label class="setting-label">Top</label>
+                        <input type="number" class="input" id="cropTop" value="0" min="0">
+                    </div>
+                    <div class="field">
+                        <label class="setting-label">Left</label>
+                        <input type="number" class="input" id="cropLeft" value="0" min="0">
+                    </div>
+                </div>
+                <div class="field-row">
+                    <div class="field">
+                        <label class="setting-label">Width</label>
+                        <input type="number" class="input" id="cropWidth" placeholder="1200" min="0">
+                    </div>
+                    <div class="field">
+                        <label class="setting-label">Height</label>
+                        <input type="number" class="input" id="cropHeight" placeholder="auto" readonly>
+                    </div>
+                </div>
+            </div>
+
+            <hr class="divider">
+
+            <!-- Output -->
+            <div class="setting-group">
+                <label class="setting-label" for="targetName">Target Name</label>
+                <input type="text" class="input" id="targetName" placeholder="e.g. my_logo">
+            </div>
+
+            <button class="btn-generate" id="generateBtn" disabled>
+                Generate Image Target
+            </button>
+        </div>
+    </main>
+
+    <!-- Output Modal -->
+    <div class="modal-backdrop" id="outputModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h2>Generated Output</h2>
+                <button class="modal-close" id="modalClose">✕</button>
+            </div>
+            <div class="output-grid" id="outputGrid"></div>
+            <div class="json-toggle">
+                <button class="btn-text" id="jsonToggleBtn">Show JSON ▾</button>
+                <div class="json-preview hidden" id="jsonPreview">
+                    <pre id="jsonContent"></pre>
+                </div>
+            </div>
+            <button class="btn-download" id="downloadBtn">📦 Download ZIP</button>
+        </div>
+    </div>
+
+    <!-- Processing Overlay -->
+    <div class="processing" id="processingOverlay">
+        <div class="spinner"></div>
+        <span>Processing...</span>
+    </div>
+
+    <!-- Toast -->
+    <div class="toast" id="toast"></div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script src="app.js" type="module"></script>
+</body>
+
+</html>
