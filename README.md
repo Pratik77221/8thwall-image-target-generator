@@ -2,7 +2,7 @@
 
 A web-based tool for generating [8th Wall](https://www.8thwall.com/) AR image target metadata from your images. All processing runs client-side in the browser — no server needed.
 
-🔗 **Live App**: [8thwallimagetarget.netlify.app](https://8thwallimagetarget.netlify.app)
+🔗 **Live App**: [8thwallimagetarget.pratikmane.tech](https://8thwallimagetarget.pratikmane.tech)
 
 ## Features
 
